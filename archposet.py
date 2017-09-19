@@ -106,8 +106,8 @@ while ans:
 			print (colored("\nMenu Base de dados", 'white' , attrs=['bold']))
 			if dbselected:
 				print ("Base de dados - " + colored(dbselected, 'red') )
-				submenu_dbselected = ["Read - ", "Remove - ", "Instalar  "]
-				submenu2_dbselected = ["Ler apps", "Remover apps", "Instalar apps"]
+				submenu_dbselected = ["Read - ", "Add - ", "Remove - ", "Instalar  "]
+				submenu2_dbselected = ["Ler apps", "Adicionar programas", "Remover apps", "Instalar apps"]
 
 				print (linha)
 				for i in range(len(submenu_dbselected)):
@@ -135,13 +135,15 @@ while ans:
 					dbselected=basededados[selbd]
 					rsp ="no"
 				else:
-					input("Number incorrecto!!!")
+					input("Numero  incorrecto!!!")
 
 			elif rsp == "1":
 				db.create()
-			elif rsp == "2":
-				db.delete(dbselected)
-				dbselected = ''
+			elif rsp == "Add":
+				tabela= db.readtabelas(dbselected)
+				apps_add=input("Applicacoes a adicionar (ex:thunar fman etc): ")
+				apps=db.add(dbselected, tabela, apps_add)
+				rsp ="no"
 			elif rsp == 'Read':
 				tabela= db.readtabelas(dbselected)
 				apps=db.read(dbselected, tabela)
@@ -155,10 +157,6 @@ while ans:
 				tabela= db.readtabelas(dbselected)
 				apps = db.instalar(dbselected, tabela)
 				rsp ="no"
-			elif rsp == "Read":
-				pass
-			elif rsp == "Remove":
-				pass
 	elif ans=="4":
 		utilizador.clean()
 	elif ans=="x":

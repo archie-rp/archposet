@@ -168,18 +168,40 @@ def check_system():
 	elif vga == "intel corporation":
 		print("intel corporation")
 	else:
-		"Error no vga found"
+		"Nenhum resultado en"
 
 class database():
 
 	def create(self):
 		#connection = sqlite3.connect("example.db")
-		connection = sqlite3.connect("teste1.db")
-		c = connection.cursor()
-		#c.execute('create table Persons (id int, name text, city text)')
-		c.execute('create table apps (id integer primary key, name blob, service int, name_service text)')
-		c.execute('create table themes (id integer primary key, name text)')
-		c.execute('create table fonts (id integer primary key, name text)')
+		os.system('clear')
+		print (linha)
+		print((colored("Adicionar Base de dados: ", 'cyan', attrs=['bold'])))
+		print (linha)
+		nome_Basededados=input("Nome Base de dados:")
+		if nome_Basededados == '':
+			text=input("\nNome invalido!\n Voltar <Enter>")
+		else:
+			connection = sqlite3.connect("Databases/" + nome_Basededados)
+			c = connection.cursor()
+			print (linha)
+			print((colored("Exemplo [Nome_Tabela] - [campo] \n Aplicacoes_imagens  nome_programa", 'cyan', attrs=['bold'])))
+			print (linha)
+			print((colored("Adicionar Tabela: ", 'cyan', attrs=['bold'])))
+			nome_tabela=input("Nome Tabela:")
+			if nome_tabela == '':
+				text=input("\nNome invalido!\n Voltar <Enter>")
+			else:
+				print (linha)
+				print((colored("Adicionar Campo: ", 'cyan', attrs=['bold'])))
+				print (linha)
+				nome_campo=input("Nome Campo:")
+				if nome_campo == '':
+					text=input("\nNome invalido!\n Voltar <Enter>")
+				else:
+					c.execute('create table ' + nome_tabela + ' (id integer primary key, name ' + nome_campo + ')')
+		#c.execute('create table themes (id integer primary key, name text)')
+		#c.execute('create table fonts (id integer primary key, name text)')
 		#c.execute('insert into Persons VALUES (1, "smith", "dallas")')
 		#c.execute('insert into apps (name) VALUES ("nano")')
 		#c.execute('insert into Applications (name) VALUES ("vim")')
@@ -275,9 +297,9 @@ class database():
 		input ("")
 		return apps
 
-	def insert(self, apps, tp):
+	def add(self, bds, tp, apps_add):
 			#connection = sqlite3.connect("example.db")
-			connection = sqlite3.connect("teste1.db")
+			connection = sqlite3.connect('./Databases/'+ bds)
 			c = connection.cursor()
 			#c.execute('create table Persons (id int, name text, city text)')
 			#c.execute('create table Applications (id integer primary key, name blob, service int, name_service text)')
@@ -285,23 +307,13 @@ class database():
 			#apps=("mpd mpc alsa-utils alsa-plugins xorg-server xorg-xinit xorg-server-utils xorg-twm xorg-xdpyinfo xorg-xdriinfo xorg-xev xorg-xgamma xorg-xinput xorg-xkbcomp xorg-xkbevd xorg-xkbutils xorg-xkill xorg-xlsatoms xorg-xlsclients xorg-xmessage xorg-xmodmap xorg-xpr xorg-xprop xorg-xsetroot xorg-xvinfo xorg-xrandr xorg-xrdb xorg-xrefresh xorg-xset xorg-xwd xorg-xwininfo xorg-xwud xterm zsh pcmanfm thunar lxappearance mirage file-roller udisks polkit gvfs gvfs-smb gvfs-mtp bash-completion udiskie chromium zip unrar tar autofs ntfs-3g thunar-archive-plugin thunar-volman pidgin curl git wget mplayer vlc lxappearance bc rsync mlocate bash-completion pkgstats ntfs-3g dosfstools exfat-utils fuse fuse-exfat openssh nfs-utils samba smbnetfs gamin rxvt-unicode pcmanfm gvfs scrot thunar tumbler leafpad epdfview nitrogen wicd wicd-gtk libmtp gvfs-mtp jdk7-openjdk icedtea-web-java7 htop chromium firefox transmission-gtk gst-plugins-base gst-plugins-base-libs gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav vlc xbmc libbluray libquicktime weechat imap libdvdread libdvdnav libdvdcss virtualbox firefox compton-git weeplugins-git nano-syntax-highlighting-git qtconfiguration zsh-syntax-highlighting android-sdk sublime-text  tlp rssh")
 			#fonts=("ttf-liberation ttf-freefont ttf-bitstream-vera ttf-dejavu tamsyn-font")
 			#themes=("faenza-icon-theme mediterraneannight-theme adwaita-x-dark-and-light-theme gtk-theme-hope zukitwo-themes gtk-theme-elementary mate-icon-theme-faenza gnome-theme-adwaita gtk-theme-numix-git")
-			apps=apps.split(' ')
+			apps=apps_add.split(' ')
 			#fonts=fonts.split(' ')
 			#themes=themes.split(' ')
-			print('Name Packages:', apps, '\n type:', tp)
+			input(apps)
 			#print('\n apps:', apps,'\n fonts:', fonts, '\n themes:', themes)
-			if tp == '0':	
-				for i in range(len(apps)):
-					c.execute('insert into apps (name) VALUES ("' + apps[i] + '")')
-					print(apps[i])	
-			elif tp == '1':
-				for i in range(len(apps)):
-					c.execute('insert into themes (name) VALUES ("' + apps[i] + '")')
-					print(apps[i])
-			elif tp == '2':
-				for i in range(len(apps)):
-					c.execute('insert into fonts (name) VALUES ("' + apps[i] + '")')
-					print(apps[i])
+			for i in range(len(apps)):
+				c.execute('insert into ' + tp+ ' (name) VALUES ("' + apps[i] + '")')
 			#c.execute('insert into fonts (name) VALUES ("' + fonts + '")')
 			#c.execute('insert into themes (name) VALUES ("' + themes + '")')
 			connection.commit()
